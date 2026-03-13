@@ -6,7 +6,7 @@
   <title>My Simple Website</title>
 </head>
 <body>
-
+  
   <h1>Welcome to My Website</h1>
   <p>This website makes me happy.</p>
 
@@ -38,7 +38,7 @@
   <hr>
 
   <h2>A Photo</h2>
-  <img src="https://www.bradaronson.com/happy/" alt="A random photo" width="400">
+  <img src="https://www.bradaronson.com/wp-content/uploads/2013/10/happy.jpg" alt="A random photo" width="400">
 
   <hr>
 
