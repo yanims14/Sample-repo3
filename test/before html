@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Simple Website</title>
+</head>
+<body>
+
+  <h1>Welcome to My Website</h1>
+  <p>This website makes me happy.</p>
+
+  <hr>
+
+  <h2>About Me</h2>
+  <p>Hi! My name is <strong>Yanitza</strong>. I am learning how to build websites using HTML.</p>
+  <p>I enjoy <em>reading</em>, <em>coding</em>, and <em>hiking</em>.</p>
+
+  <hr>
+
+  <h2>My Favourite Foods</h2>
+  <ul>
+    <li>Pizza</li>
+    <li>Sushi</li>
+    <li>Tacos</li>
+    <li>Noodles</li>
+  </ul>
+
+  <hr>
+
+  <h2>Top 3 Things To Do This Week</h2>
+  <ol>
+    <li>Finish my HTML project</li>
+    <li>Practice coding</li>
+    <li>Learn a new programming concept</li>
+  </ol>
+
+  <hr>
+
+  <h2>A Photo</h2>
+  <img src="https://www.bradaronson.com/happy/" alt="A random photo" width="400">
+
+  <hr>
+
+  <h2>Contact Me</h2>
+  <form>
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" rows="4" cols="40"></textarea><br><br>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+
+</body>
+</html>
