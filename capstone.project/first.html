@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pearlhaus </title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #1a1919;
+        }
+
+        header {
+            background: #3c5867;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background: #2e93c6;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero {
+            background: url('https://images.unsplash.com/photo-1588776814546-ec7e0a9c7d1b') center/cover no-repeat;
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+        }
+
+        .section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 20px;
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        .before-after img {
+            width: 45%;
+            margin: 10px;
+            border-radius: 10px;
+        }
+
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        button {
+            background: #00aaff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Pearlhaus </h1>
+    <p>Professional Teeth Whitening Services</p>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#services">Services</a>
+    <a href="#results">Results</a>
+    <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero">
+    <h1>Get a Brighter Smile Today</h1>
+    <p>Safe, Fast & Affordable Whitening</p>
+    <button>Book Now</button>
+</section>
+
+<section id="services" class="section">
+    <h2>Our Services</h2>
+    <div class="services">
+        <div class="card">
+            <h3>Basic Whitening</h3>
+            <p>Quick and effective treatment</p>
+        </div>
+        <div class="card">
+            <h3>Advanced Whitening</h3>
+            <p>Long-lasting results</p>
+        </div>
+        <div class="card">
+            <h3>VIP Treatment</h3>
+            <p>Maximum brightness package</p>
+        </div>
+    </div>
+</section>
+
+<section id="results" class="section before-after">
+    <h2>Before & After</h2>
+    <img src="https://images.unsplash.com/photo-1606813902914-9c84d9dfb9a5" alt="Before">
+    <img src="https://images.unsplash.com/photo-1588776814546-ec7e0a9c7d1b" alt="After">
+</section>
+
+<section id="contact" class="section">
+    <h2>Contact Us</h2>
+    <form>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Your Message"></textarea>
+        <button type="submit">Send Message</button>
+    </form>
+</section>
+
+<footer>
+    <p>© 2026 BrightSmile Whitening</p>
+</footer>
+
+</body>
+</html>

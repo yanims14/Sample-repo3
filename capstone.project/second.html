@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pearlhaus — Luminous Smiles</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream: #f9f4ee;
+      --pearl: #ede8e0;
+      --gold: #b89a6a;
+      --gold-light: #d4b98a;
+      --charcoal: #1a1714;
+      --warm-gray: #7a736b;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── CURSOR ── */
+    body { cursor: none; }
+    #cursor {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--gold);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, background 0.2s;
+      transform: translate(-50%, -50%);
+    }
+    #cursor-ring {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      position: fixed; top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.35s cubic-bezier(.23,1,.32,1), opacity 0.3s;
+      opacity: 0.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 60px;
+      mix-blend-mode: multiply;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--charcoal);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      font-weight: 300;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 60px 80px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.2s forwards;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(4rem, 7vw, 7rem);
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      line-height: 1.9;
+      color: var(--warm-gray);
+      max-width: 320px;
+      font-weight: 300;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+    .btn-primary {
+      background: var(--charcoal);
+      color: var(--cream);
+      padding: 16px 40px;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      transition: background 0.3s, color 0.3s;
+      border: 1px solid var(--charcoal);
+    }
+    .btn-primary:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .btn-ghost {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      text-decoration: none;
+      font-weight: 300;
+      border-bottom: 1px solid var(--gold-light);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--gold); }
+
+    .hero-right {
+      position: relative;
+      background: var(--pearl);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Pearl / tooth abstract illustration */
+    .hero-illustration {
+      position: relative;
+      width: 340px;
+      height: 340px;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.5s forwards;
+    }
+    .pearl-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      animation: rotateRing 18s linear infinite;
+    }
+    .pearl-ring:nth-child(1) { width: 340px; height: 340px; top: 0; left: 0; opacity: 0.3; }
+    .pearl-ring:nth-child(2) { width: 260px; height: 260px; top: 40px; left: 40px; opacity: 0.5; animation-duration: 24s; animation-direction: reverse; }
+    .pearl-ring:nth-child(3) { width: 180px; height: 180px; top: 80px; left: 80px; opacity: 0.4; }
+    .pearl-center {
+      position: absolute;
+      width: 120px; height: 120px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle at 35% 35%, #fff 0%, var(--gold-light) 60%, var(--gold) 100%);
+      border-radius: 50%;
+      box-shadow: 0 20px 60px rgba(184,154,106,0.35);
+    }
+    .hero-number {
+      position: absolute;
+      bottom: 50px; right: 60px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12rem;
+      font-weight: 300;
+      color: rgba(184,154,106,0.08);
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--charcoal);
+      padding: 18px 0;
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      width: max-content;
+      animation: marqueeScroll 20s linear infinite;
+    }
+    .marquee-item {
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      white-space: nowrap;
+      font-weight: 300;
+    }
+    .marquee-dot { color: var(--gold); opacity: 0.5; }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 140px 60px;
+      position: relative;
+    }
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 60px;
+      font-weight: 300;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--white);
+      padding: 52px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+      border: 1px solid rgba(184,154,106,0.12);
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width 0.5s cubic-bezier(.23,1,.32,1);
+    }
+    .service-card:hover::before { width: 100%; }
+    .service-card:hover { background: var(--cream); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      letter-spacing: 0.02em;
+    }
+    .service-desc {
+      font-size: 0.75rem;
+      line-height: 1.9;
+      color: var(--warm-gray);
+      font-weight: 300;
+    }
+    .service-price {
+      margin-top: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    /* ── ABOUT SPLIT ── */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+    .about-visual {
+      background: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.4;
+      position: relative;
+      z-index: 2;
+    }
+    .about-quote span { color: var(--gold-light); }
+    .about-bg-text {
+      position: absolute;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.03);
+      bottom: -30px; right: -20px;
+      user-select: none;
+      line-height: 1;
+    }
+    .about-content {
+      background: var(--pearl);
+      padding: 80px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .about-content h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 28px;
+    }
+    .about-content p {
+      font-size: 0.8rem;
+      line-height: 2;
+      color: var(--warm-gray);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+    .about-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 48px;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      font-weight: 300;
+      margin-top: 6px;
+    }
+
+    /* ── PROCESS ── */
+    .process {
+      padding: 140px 60px;
+      background: var(--white);
+    }
+    .process-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 80px;
+    }
+    .process-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      line-height: 1.1;
+    }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-left: 1px solid rgba(184,154,106,0.2);
+    }
+    .step {
+      padding: 48px 40px;
+      border-right: 1px solid rgba(184,154,106,0.2);
+      position: relative;
+    }
+    .step-line {
+      position: absolute;
+      top: 0; left: 40px;
+      width: 40px; height: 1px;
+      background: var(--gold);
+    }
+    .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: rgba(184,154,106,0.15);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .step-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 300;
+      margin-bottom: 14px;
+    }
+    .step-desc {
+      font-size: 0.73rem;
+      line-height: 1.85;
+      color: var(--warm-gray);
+      font-weight: 300;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials {
+      padding: 120px 60px;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      padding: 48px 40px;
+      border: 1px solid rgba(184,154,106,0.1);
+    }
+    .stars {
+      display: flex; gap: 4px; margin-bottom: 24px;
+    }
+    .star {
+      width: 10px; height: 10px;
+      background: var(--gold);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      color: var(--charcoal);
+    }
+    .testimonial-author {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    /* ── BOOKING ── */
+    .booking {
+      background: var(--charcoal);
+      padding: 120px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .booking-bg {
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(184,154,106,0.08);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .booking-bg:nth-child(2) { width: 800px; height: 800px; }
+    .booking-bg:nth-child(3) { width: 1000px; height: 1000px; }
+    .booking-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      font-weight: 300;
+      position: relative; z-index: 2;
+    }
+    .booking h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 24px;
+      position: relative; z-index: 2;
+    }
+    .booking h2 em { font-style: italic; color: var(--gold-light); }
+    .booking p {
+      font-size: 0.8rem;
+      color: rgba(249,244,238,0.5);
+      letter-spacing: 0.1em;
+      margin-bottom: 52px;
+      font-weight: 300;
+      position: relative; z-index: 2;
+    }
+    .booking-form {
+      display: flex;
+      gap: 2px;
+      position: relative; z-index: 2;
+    }
+    .booking-form input {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(184,154,106,0.25);
+      color: var(--cream);
+      padding: 16px 28px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      outline: none;
+      width: 260px;
+      transition: border-color 0.3s;
+    }
+    .booking-form input::placeholder { color: rgba(249,244,238,0.3); }
+    .booking-form input:focus { border-color: var(--gold); }
+    .booking-form button {
+      background: var(--gold);
+      border: none;
+      color: var(--charcoal);
+      padding: 16px 36px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 400;
+      cursor: none;
+      transition: background 0.3s;
+    }
+    .booking-form button:hover { background: var(--gold-light); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      border-top: 1px solid rgba(184,154,106,0.15);
+      padding: 52px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+    .footer-copy {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: rgba(249,244,238,0.25);
+      font-weight: 300;
+    }
+    .footer-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(249,244,238,0.35);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes rotateRing {
+      from { transform: rotate(0deg); } to { transform: rotate(360deg); }
+    }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); } to { transform: translateX(-50%); }
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(.23,1,.32,1), transform 0.9s cubic-bezier(.23,1,.32,1);
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Pearlhaus</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">Studio</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#booking">Book</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Premium Teeth Whitening Studio</p>
+      <h1 class="hero-title">Your<br><em>Brightest</em><br>Smile.</h1>
+      <p class="hero-sub">Professional-grade whitening treatments designed to reveal the luminous smile you deserve — safely, comfortably, beautifully.</p>
+      <div class="hero-cta">
+        <a href="#booking" class="btn-primary">Book a Session</a>
+        <a href="#services" class="btn-ghost">View Treatments</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-illustration">
+        <div class="pearl-ring"></div>
+        <div class="pearl-ring"></div>
+        <div class="pearl-ring"></div>
+        <div class="pearl-center"></div>
+      </div>
+      <div class="hero-number">✦</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Luminous Results</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Gentle Formula</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Professional Grade</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Certified Specialists</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Lasting Brilliance</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Pearlhaus Studio</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Luminous Results</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Gentle Formula</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Professional Grade</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Certified Specialists</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Lasting Brilliance</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Pearlhaus Studio</span><span class="marquee-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services fade-in-section" id="services">
+    <p class="section-label">Our Treatments</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <h3 class="service-name">The Pearl<br>Classic</h3>
+        <p class="service-desc">Our foundational whitening session using professional-grade gel and precision LED activation. Designed for first-timers and maintenance alike.</p>
+        <div class="service-price">From $89</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <h3 class="service-name">The Haus<br>Signature</h3>
+        <p class="service-desc">Our most popular treatment — three rounds of accelerated whitening with a remineralizing finish. Up to 8 shades lighter in a single visit.</p>
+        <div class="service-price">From $149</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <h3 class="service-name">Luminary<br>Elite</h3>
+        <p class="service-desc">The ultimate Pearlhaus experience. Custom trays, four full rounds, and a bespoke aftercare kit curated for your enamel type.</p>
+        <div class="service-price">From $249</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about fade-in-section" id="about">
+    <div class="about-visual">
+      <p class="about-quote">Beauty begins where<br><span>confidence blooms.</span></p>
+      <div class="about-bg-text">✦</div>
+    </div>
+    <div class="about-content">
+      <p class="section-label">The Pearlhaus Studio</p>
+      <h2>Crafted for the<br>Discerning Smile</h2>
+      <p>Pearlhaus was born from a simple belief: professional whitening should feel like a luxury ritual, not a clinical procedure. Our studio blends cutting-edge whitening science with an atmosphere of calm refinement.</p>
+      <p>Every treatment is performed by certified specialists using enamel-safe, dentist-approved formulas. We never rush. We never compromise.</p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Shades Lighter</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2k+</div>
+          <div class="stat-label">Happy Clients</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">45<span style="font-size:1.4rem">min</span></div>
+          <div class="stat-label">Per Session</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process fade-in-section" id="process">
+    <div class="process-header">
+      <h2 class="process-title">How It<br>Works</h2>
+      <p style="font-size:0.75rem;color:var(--warm-gray);font-weight:300;max-width:260px;line-height:1.9">A streamlined four-step ritual designed around your comfort and results.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">01</div>
+        <div class="step-name">Consultation</div>
+        <p class="step-desc">We assess your enamel, shade level, and whitening goals to select the ideal treatment protocol.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">02</div>
+        <div class="step-name">Preparation</div>
+        <p class="step-desc">Teeth are gently cleaned and soft tissue is protected before gel application begins.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">03</div>
+        <div class="step-name">Activation</div>
+        <p class="step-desc">Our precision LED light activates the whitening formula in targeted rounds for even, dramatic results.</p>
+      </div>
+      <div class="step">
+        <div class="step-line"></div>
+        <div class="step-num">04</div>
+        <div class="step-name">Aftercare</div>
+        <p class="step-desc">A remineralizing treatment seals and strengthens enamel. You leave glowing — and knowing exactly how to maintain it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials fade-in-section">
+    <p class="section-label">Client Stories</p>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testimonial-text">"I've tried every whitening kit on the market. Nothing came close to what Pearlhaus did in a single session."</p>
+        <div class="testimonial-author">— Sophia R., Phoenix</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testimonial-text">"The studio is stunning and the results were instant. My wedding photos are going to be incredible."</p>
+        <div class="testimonial-author">— Mia T., Scottsdale</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testimonial-text">"No sensitivity whatsoever, and my teeth are the whitest they've ever been. Worth every penny."</p>
+        <div class="testimonial-author">— James K., Tempe</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking fade-in-section" id="booking">
+    <div class="booking-bg"></div>
+    <div class="booking-bg"></div>
+    <div class="booking-bg"></div>
+    <p class="booking-label">Reserve Your Session</p>
+    <h2>Begin Your<br><em>Transformation</em></h2>
+    <p>First appointments available this week. No waitlist.</p>
+    <div class="booking-form">
+      <input type="email" placeholder="Your email address" />
+      <button>Book Now</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Pearlhaus</div>
+    <div class="footer-copy">© 2026 Pearlhaus Studio. All rights reserved.</div>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#">Privacy</a></li>
+    </ul>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+      setTimeout(() => {
+        ring.style.left = e.clientX + 'px';
+        ring.style.top  = e.clientY + 'px';
+      }, 60);
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
